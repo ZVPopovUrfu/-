@@ -1,0 +1,97 @@
+using System;
+
+namespace ConsoleApp5
+{
+    internal class task1
+    {
+        static void Main(string[] args)
+        {
+            double[] array = new double[] { 1, 23324.323, 3067770, -99999.999999, 326446234432 };
+
+            List<double> summa = new List<double>();
+            List<double> result = new List<double>();
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                if (array[i] > 0)
+                    summa.Add(array[i]);
+
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    summa.Add(array[j]);
+                    if (summa.Sum() > result.Sum())
+                    {
+                        result.Clear();
+                        result.AddRange(summa);
+                    }
+                }
+                summa.Clear();
+            }
+            Console.WriteLine(string.Join(" ", result.ToArray()));
+        }
+    }
+
+
+
+    internal class task2
+    {
+        static void Main()
+        {
+            var array = new double[9] { 0, 1, 3.213, -4, 5.32412312, 6, 7, 4, 4 };
+            var evenArray = new double[array.Length / 2];
+            var oddArray = new double[array.Length / 2];
+            GetArrays(array, ref evenArray, ref oddArray);
+
+            int L = int.Parse(Console.ReadLine());
+            int R = int.Parse(Console.ReadLine());
+
+            double sum = 0;
+            if (L % 2 == 0)
+            {
+                if (R % 2 == 0)
+                {
+                    for (var i = L / 2; i < R / 2; i++)
+                        sum += evenArray[i];
+                    sum += array[R];
+                }
+
+                else if (R % 2 != 0)
+                    for (var i = L / 2; i <= R / 2; i++)
+                        sum += evenArray[i];
+            }
+
+            else
+            {
+                if (R % 2 != 0)
+                {
+                    for (var i = L / 2; i < R / 2; i++)
+                        sum += oddArray[i];
+                    sum += array[R];
+                }
+                else
+                    for (var i = L / 2; i < R / 2; i++)
+                        sum += oddArray[i];
+            }
+            Console.WriteLine(sum);
+        }
+
+        public static void GetArrays(double[] array, ref double[] evenArray, ref double[] oddArray)
+        {
+            var count1 = 0;
+            var count2 = 0;
+            for (var i = 0; i < array.Length - 1; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    evenArray[count1] = array[i] + array[i + 1];
+                    count1++;
+                }
+                else
+                {
+                    oddArray[count2] = array[i] + array[i + 1];
+                    count2++;
+                }
+            }
+        }
+    }
+}
+
